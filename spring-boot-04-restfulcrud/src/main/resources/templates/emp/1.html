@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>记事本</title>
+</head>
+<body>
+<section id="app">
+    <header>
+        <input v-model="inputValue" @keyup.enter="add" autofocus="autofocus" autocomplete="off" placeholder="输入任务"/>
+    </header>
+    <section>
+        <ul>
+            <li v-for="(item,index) in list">
+                <div>
+                    <span>{{index + 1}}</span>
+                    <label>{{item}}</label>
+                    <button @click="del(index)">del</button>
+                </div>
+            </li>
+        </ul>
+    </section>
+    <footer v-if="list.length != 0">
+        <span>{{list.length}}</span>
+        <button @click="clear">clear</button>
+        <button @click="del"></button>
+
+    </footer>
+</section>
+<!-- 生产环境版本，优化了尺寸和速度 -->
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script>
+    var app = new Vue({
+        el:"#app",
+        data:{
+            list:["this","that","there"],
+            inputValue:"good",
+        },
+        methods:{
+            add:function(){
+                if(this.inputValue != "")
+                    this.list.push(this.inputValue)
+            },
+            del:function(index){
+                this.list.splice(index,1);
+            },
+            clear:function(){
+                this.list=[]
+            }
+        }
+    })
+</script>
+</body>
+</html>
